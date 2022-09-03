@@ -72,7 +72,7 @@ TwilioSwitch.prototype = {
 			// let save_file = fs.readFileSync( "/homebridge/node_modules/homebridge-twilio-sms/save_file.json" );
 			let save_file = fs.readFileSync( "./save_file.json" );
 			return JSON.parse( save_file );
-		} catch( e ) { console.log( e ); return false; }
+		} catch( e ) { console.log( e ); return {}; }
 	},
 	writeSaveFile( js_object ) {
 		// fs.writeFileSync( "/homebridge/node_modules/homebridge-twilio-sms/save_file.json" , JSON.stringify( js_object ) );
@@ -84,6 +84,8 @@ TwilioSwitch.prototype = {
 			if (powerOn) {
 				let save_file = self.readSaveFile();
 				let now = new Date();
+				if ( !save_file[ "sensors" ] ) { save_file[ "sensors" ] = {}; }
+				if ( !save_file[ "sensors" ][ this.name ] ) { save_file[ "sensors" ][ this.name ] = { "last_power_on_time": false }; }
 				if ( save_file[ "sensors" ][ this.name ][ "last_power_on_time" ] === false ) {
 					self.log( "resetting last_power_on_time to now" );
 					save_file[ "sensors" ][ this.name ][ "last_power_on_time" ] = now;
