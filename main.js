@@ -79,7 +79,7 @@ TwilioSwitch.prototype = {
 			fs.writeFileSync( path.join( process.cwd() , "save_file.json" ) , JSON.stringify({
 				"sensors": {}
 			}));
-			return { "seonsors": {} };
+			return { "sensors": {} };
 		}
 	},
 	writeSaveFile( js_object ) {
