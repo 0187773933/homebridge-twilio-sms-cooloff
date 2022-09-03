@@ -1,6 +1,6 @@
 {
   "name": "homebridge-twilio-sms-cooloff",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Homebridge plugin to send SMSes with a static message using Twilio api (paid service) - with cooloff",
   "main": "main.js",
   "keywords": [

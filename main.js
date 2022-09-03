@@ -102,7 +102,7 @@ TwilioSwitch.prototype = {
 				let difference = ( now - new Date( save_file[ "sensors" ][ this.name ][ "last_power_on_time" ] ) );
 				this.log( "Difference = " + difference.toString() );
 				if ( difference > 0 && difference < this.cooloff_milliseconds ) {
-					let remaining = ( save_file[ "cooldown_milliseconds" ] - difference );
+					let remaining = ( this.cooloff_milliseconds - difference );
 					self.log( "still inside cooldown , " + remaining.toString() + " milliseconds remaining" );
 					if (self.automaticallySwitchOff === true) {
 						self.switchService.setCharacteristic(Characteristic.On, false);
