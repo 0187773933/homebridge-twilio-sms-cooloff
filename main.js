@@ -1,10 +1,12 @@
 const fs = require( "fs" );
+const path = require( "path" );
+const process = require( "process" );
 var Service, Characteristic;
 
 module.exports = function (homebridge) {
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
-	homebridge.registerAccessory("homebridge-twilio-sms", "Twilio", TwilioSwitch);
+	homebridge.registerAccessory("homebridge-twilio-sms-cooloff", "Twilio-Cooloff", TwilioSwitch);
 }
 
 const MonthNames = [ "JAN" , "FEB" , "MAR" , "APR" , "MAY" , "JUN" , "JUL" , "AUG" , "SEP" , "OCT" , "NOV" , "DEC" ];
@@ -50,7 +52,7 @@ TwilioSwitch.prototype = {
 		var informationService = new Service.AccessoryInformation();
 
 		informationService
-				.setCharacteristic(Characteristic.Manufacturer, "Twilio")
+				.setCharacteristic(Characteristic.Manufacturer, "Twilio-Cooloff")
 				.setCharacteristic(Characteristic.Model, "Send an SMS")
 				.setCharacteristic(Characteristic.SerialNumber, "api");
 
@@ -70,13 +72,19 @@ TwilioSwitch.prototype = {
 	readSaveFile: function() {
 		try {
 			// let save_file = fs.readFileSync( "/homebridge/node_modules/homebridge-twilio-sms/save_file.json" );
-			let save_file = fs.readFileSync( "./save_file.json" );
+			let save_file = fs.readFileSync( path.join( process.cwd() , "save_file.json" ) );
 			return JSON.parse( save_file );
-		} catch( e ) { console.log( e ); return {}; }
+		} catch( e ) {
+			console.log( "save file doesn't exist , creating" );
+			fs.writeFileSync( path.join( process.cwd() , "save_file.json" ) , JSON.stringify({
+				"sensors": {}
+			}));
+			return { "seonsors": {} };
+		}
 	},
 	writeSaveFile( js_object ) {
 		// fs.writeFileSync( "/homebridge/node_modules/homebridge-twilio-sms/save_file.json" , JSON.stringify( js_object ) );
-		fs.writeFileSync( "./save_file.json" , JSON.stringify( js_object ) );
+		fs.writeFileSync( path.join( process.cwd() , "save_file.json" ) , JSON.stringify( js_object ) );
 	},
 	setPowerState: function(powerOn, callback) {
 		var self = this;
