@@ -1,6 +1,6 @@
 # Modified from https://github.com/qata/homebridge-twilio-sms#readme
 
-# homebridge-twilio-sms-coolof
+# homebridge-twilio-sms-cooloff
 
 Homebridge plugin to send SMSes with static text.
 This plugin uses Twilio api, which is a paid service at a fair price - [www.Twilio.com](https://www.twilio.com).
@@ -29,7 +29,7 @@ Config.json sample:
  ```
 "accessories": [
         {
-            "accessory": "Twilio",
+            "accessory": "Twilio-Cooloff",
             "name": "SMS Lottie",
             "accountSid": "4352435f45f423456d652643dxre",
             "authToken": "RVGH54CG45G5TG354GRT45T45G4G",
